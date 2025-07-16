@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Loading Animation Simulator</title>
 </head>
-<body style="font-family: monospace; text-align: center; padding-top: 100px; background-color: #f4f4f4;">
+<body style="font-family: monospace; text-align: center; padding-top: 100px; background-color: #f4f4f4; transition: background-color 0.5s;">
 
   <div id="loader" style="font-size: 2rem; margin-bottom: 20px;">Loading...</div>
   <div id="status">Please wait</div>
@@ -17,46 +17,51 @@
       // Will grab the status message below the animation
       const status = document.getElementById("status");
 
-     // Array of symbols that cycle to show animation
+      // Array of symbols that cycle to show animation
       const frames = ["⏳", "⌛", ".", "..", "..."];
 
-     // Index tracks which symbol is currently shown
+      // Index tracks which symbol is currently shown
       let index = 0;
 
-     // Counts how many full cycles we've completed
+      // Counts how many full cycles we've completed
       let cycleCount = 0;
 
-     // Max number of cycles before stopping the animation
-const maxCycles = 10;
+      // Max number of cycles before stopping the animation
+      const maxCycles = 10;
 
-    // // CREATIVE IDEA: Add background music synced with the animation progress
-// (Could play a sound when the loader changes or transition the page theme when complete)
+      // Array of soft background colors to cycle through
+      const colors = ["#f4f4f4", "#e0f7fa", "#fce4ec", "#f3e5f5", "#fff8e1"];
 
+      // CREATIVE IDEA: Add background music synced with the animation progress
+      // (Could play a sound when the loader changes or transition the page theme when complete)
 
-// Starts a loop that updates the emoji every 500ms
-const interval = setInterval(() => {
+      // Starts a loop that updates the emoji every 500ms
+      const interval = setInterval(() => {
 
-  // Updates the emoji using the current index
-  loader.textContent = frames[index % frames.length];
+        // Updates the emoji using the current index
+        loader.textContent = frames[index % frames.length];
 
-  // Move to the next frame
-  index++;
+        // Randomly change background color each frame
+        document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
-  // If we've reached the end of the array, increase cycle count
-  if (index % frames.length === 0) {
-    cycleCount++;
-  }
+        // Move to the next frame
+        index++;
 
-  // If we've reached the max cycles, stop the loop
-  if (cycleCount >= maxCycles) {
-    clearInterval(interval); // Stops the animation
-    loader.textContent = "✅"; // Final emoji
-    status.textContent = "Done!"; // Final message
-  }
-}, 500);
+        // If we've reached the end of the array, increase cycle count
+        if (index % frames.length === 0) {
+          cycleCount++;
+        }
 
+        // If we've reached the max cycles, stop the loop
+        if (cycleCount >= maxCycles) {
+          clearInterval(interval); // Stops the animation
+          loader.textContent = "✅"; // Final emoji
+          status.textContent = "Done!"; // Final message
+        }
+      }, 500);
     }
 
+    // Starts the loading animation when the page loads
     runLoadingAnimation();
   </script>
 
