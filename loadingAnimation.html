@@ -11,26 +11,50 @@
 
   <script>
     function runLoadingAnimation() {
+      // Will grab the emoji display element  
       const loader = document.getElementById("loader");
+
+      // Will grab the status message below the animation
       const status = document.getElementById("status");
 
+     // Array of symbols that cycle to show animation
       const frames = ["⏳", "⌛", ".", "..", "..."];
-      let index = 0;
-      let cycleCount = 0;
-      const maxCycles = 10;
 
-      const interval = setInterval(() => {
-        loader.textContent = frames[index % frames.length];
-        index++;
-        if (index % frames.length === 0) {
-          cycleCount++;
-        }
-        if (cycleCount >= maxCycles) {
-          clearInterval(interval);
-          loader.textContent = "✅";
-          status.textContent = "Done!";
-        }
-      }, 500);
+     // Index tracks which symbol is currently shown
+      let index = 0;
+
+     // Counts how many full cycles we've completed
+      let cycleCount = 0;
+
+     // Max number of cycles before stopping the animation
+const maxCycles = 10;
+
+    // // CREATIVE IDEA: Add background music synced with the animation progress
+// (Could play a sound when the loader changes or transition the page theme when complete)
+
+
+// Starts a loop that updates the emoji every 500ms
+const interval = setInterval(() => {
+
+  // Updates the emoji using the current index
+  loader.textContent = frames[index % frames.length];
+
+  // Move to the next frame
+  index++;
+
+  // If we've reached the end of the array, increase cycle count
+  if (index % frames.length === 0) {
+    cycleCount++;
+  }
+
+  // If we've reached the max cycles, stop the loop
+  if (cycleCount >= maxCycles) {
+    clearInterval(interval); // Stops the animation
+    loader.textContent = "✅"; // Final emoji
+    status.textContent = "Done!"; // Final message
+  }
+}, 500);
+
     }
 
     runLoadingAnimation();
